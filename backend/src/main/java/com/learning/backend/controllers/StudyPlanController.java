@@ -1,4 +1,4 @@
-package com.learning;
+package com.learning.backend.controllers;
 
 import com.learning.backend.entities.StudyPlan;
 import com.learning.backend.repositories.StudyPlanRepository;
@@ -9,14 +9,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-@RestController("plans")
+@RestController()
+@RequestMapping("/studyplans")
+@CrossOrigin(maxAge = 3600)
 public class StudyPlanController {
-
 
     private StudyPlanRepository repository;
 
     public StudyPlanController(StudyPlanRepository repository) {
-
         this.repository = repository;
     }
 

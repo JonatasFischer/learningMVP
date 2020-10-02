@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "Subject")
 public class Subject {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "subject_id")
     long id;
 

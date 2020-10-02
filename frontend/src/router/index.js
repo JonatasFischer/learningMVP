@@ -8,7 +8,7 @@ import LayoutPage from '@/components/Layout/LayoutPage'
 // SingleView
 const SingleView = () => import ('@/views/SingleView/SingleView.vue')
 // SubMenu
-const SubMenu = () => import ('@/views/SubMenu/SubMenu.vue')
+const StudyPlan = () => import ('@/views/StudyPlan/list.vue')
 
 Vue.use(VueRouter)
 
@@ -28,8 +28,8 @@ export default new VueRouter({
                     path: '/singleview',
                     component: SingleView
                 }, {
-                    path: '/submenu',
-                    component: SubMenu
+                    path: '/study-plan',
+                    component: StudyPlan
                 }
             ]
         },

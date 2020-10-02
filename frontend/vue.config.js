@@ -6,7 +6,7 @@ module.exports = {
     productionSourceMap: false,
     devServer: {
         proxy: {
-            "/api": {
+            "^/api": {
                 target: "http://localhost:8081/api",
                 secure: false
             }

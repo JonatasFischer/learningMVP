@@ -32,7 +32,7 @@
                             <span>{{$t(item.translate) || item.heading}}</span>
                         </li>
                         <!-- Single Menu -->
-                        <router-link tag="li" :to="item.path" active-class="active" v-if="!item.heading && !item.submenu">
+                        <router-link tag="li" :to="getRoute(item.path)" active-class="active" v-if="!item.heading && !item.submenu">
                             <a :title="tr(item.translate, item.name)">
                                 <span v-if="item.label" :class="'float-right badge badge-'+item.label.color">{{item.label.value}}</span>
                                 <em :class="item.icon"></em>
@@ -49,7 +49,7 @@
                             <b-collapse tag="ul" class="sidebar-nav sidebar-subnav" id="item.name" v-model="collapse[item.name]">
                                 <li class="sidebar-subnav-header">{{tr(item.translate, item.name)}}</li>
                                 <template v-for="sitem in item.submenu">
-                                    <router-link tag="li" :to="sitem.path" active-class="active">
+                                    <router-link tag="li" :to="getRoute(sitem.path)" active-class="active">
                                         <a :title="tr(sitem.translate, sitem.name)">
                                             <span v-if="sitem.label" :class="'float-right badge badge-'+sitem.label.color">{{sitem.label.value}}</span>
                                             <span>{{tr(sitem.translate, sitem.name)}}</span>
@@ -110,6 +110,9 @@
             },
             getSubRoutes(item) {
                 return item.submenu.map(({path}) => path)
+            },
+            getRoute(path) {
+                return Array.isArray(path) ? path[0] : path
             },
             // translate a key or return default values
             tr (key, defaultValue) {

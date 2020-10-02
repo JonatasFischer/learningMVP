@@ -8,17 +8,17 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name="Subject")
+@Table(name = "studyplan")
 public class StudyPlan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="studyplan_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "studyplan_id")
     private long id;
 
-    @Column(name="title", length=50, nullable=false, unique=true)
+    @Column(name = "title", length = 50, nullable = false, unique = true)
     String title;
 
-    @Column(name="description", length=50, nullable=false, unique=true)
+    @Column(name = "description", length = 50, nullable = false, unique = true)
     String description;
 
     @ManyToMany(fetch = FetchType.LAZY)

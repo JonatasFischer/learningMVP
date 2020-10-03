@@ -49,7 +49,7 @@
                             <b-collapse tag="ul" class="sidebar-nav sidebar-subnav" id="item.name" v-model="collapse[item.name]">
                                 <li class="sidebar-subnav-header">{{tr(item.translate, item.name)}}</li>
                                 <template v-for="sitem in item.submenu">
-                                    <router-link tag="li" :to="getRoute(sitem.path)" active-class="active">
+                                    <router-link tag="li" :to="getRoute(sitem.path)" :class="routeActiveClass(getRoutes(sitem.path))">
                                         <a :title="tr(sitem.translate, sitem.name)">
                                             <span v-if="sitem.label" :class="'float-right badge badge-'+sitem.label.color">{{sitem.label.value}}</span>
                                             <span>{{tr(sitem.translate, sitem.name)}}</span>
@@ -103,16 +103,24 @@
                 let collapse = {};
                 Menu
                     .filter(({heading}) => !heading)
-                    .forEach(({name, path, submenu}) => {
-                        collapse[name] = this.isRouteActive(submenu ? submenu.map(({path})=>path) : path)
+                    .forEach((item ) => {
+                        collapse[item.name] = this.isRouteActive(item.submenu ? this.getSubRoutes(item) : item.path)
                     })
                 return collapse;
             },
             getSubRoutes(item) {
-                return item.submenu.map(({path}) => path)
+              let result = item.submenu.reduce((acc, curr) => {
+                  let items = Array.isArray(curr.path) ? curr.path : [curr.path]
+                  return acc.concat(items);
+                }, []);
+              return result;
             },
             getRoute(path) {
-                return Array.isArray(path) ? path[0] : path
+                let result = Array.isArray(path) ? path[0] : path
+              return result;
+            },
+            getRoutes(path) {
+              return Array.isArray(path) ? path : [path]
             },
             // translate a key or return default values
             tr (key, defaultValue) {

@@ -14,7 +14,13 @@
         </template>
 
         <template v-slot:cell(actions)="data">
-            Info modal
+          <router-link tag="a" :to="getRoute(data)">
+            Edit
+          </router-link>
+
+          <router-link tag="span" :to="getRoute(data)" >
+            <a >Edit 2</a>
+          </router-link>
         </template>
 
       </b-table>
@@ -49,12 +55,16 @@
       }
     },
     watch: {},
-    methods: {},
+    methods: {
+      getRoute({item}) {
+        return `/study-plan/edit/${item.id}/`
+      }
+    },
     async mounted() {
       try{
         this.items = await api.get();
 
-      }catch(err){
+      } catch(err) {
         console.log(err)
       }
     }

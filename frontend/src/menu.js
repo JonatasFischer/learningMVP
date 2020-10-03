@@ -5,7 +5,7 @@ const Menu = [
     },
     {
         name: 'Single View',
-        path: 'singleview',
+        path: '/home',
         icon : 'icon-grid',
         translate: 'sidebar.nav.menu.SINGLEVIEW'
     },
@@ -17,7 +17,7 @@ const Menu = [
         submenu: [{
             name: 'StudyPlan',
             translate: 'sidebar.nav.menu.STUDY_PLAN',
-            path: ['study-plan','study-plan/{id}']
+            path: ['/study-plan','/study-plan/edit/:index']
         }]
     }
 ];

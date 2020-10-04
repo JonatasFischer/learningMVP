@@ -7,14 +7,23 @@ const URL_PARAMS = new URLSearchParams(location.search);
 /**
  * Get shop base path
  */
-const  BASE_PATH = window.location.protocol + '//' + window.location.hostname+ ':8081';
+const  BASE_PATH = window.location.protocol + '//' + window.location.hostname+ ':8080';
 
-const HOST = '';
-const GET_THEMES_URL = () => `${BASE_PATH}/api/studyplans/`;
+const STUDY_PLAN_URL = `${BASE_PATH}/api/studyplans/`;
 
 export default {
-    async get() {
-        let result = await axios.get(GET_THEMES_URL())
+    async getList() {
+        let result = await axios.get(STUDY_PLAN_URL);
+        return result.data;
+    },
+
+    async getPlan(id) {
+        let result = await axios.get(STUDY_PLAN_URL + id);
+        return result.data;
+    },
+
+    async save(studyPlan) {
+        let result = await axios.put(STUDY_PLAN_URL + studyPlan.id, studyPlan);
         return result.data;
     }
 };

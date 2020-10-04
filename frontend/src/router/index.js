@@ -26,9 +26,9 @@ export default new VueRouter({
             component: Layout,
             children: [
                 {path: '/singleview', component: SingleView},
-                {path: '/study-plan', component: StudyPlanList},
-                {path: '/study-plan/edit/:index', component: StudyPlanEdit},
-                {path: '/study-plan/delete/:index', component: StudyPlanEdit},
+                {path: '/study-plan', component: StudyPlanList, name: "study-plan"},
+                {path: '/study-plan/edit/:id', component: StudyPlanEdit},
+                {path: '/study-plan/delete/:id', component: StudyPlanEdit},
                 {path: '/study-plan/new', component: StudyPlanEdit},
             ]
         },

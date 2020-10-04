@@ -6,23 +6,16 @@
         <small>Subtitle</small>
       </div>
     </div>
-
     <b-card title="Table Card" class="card-default">
       <b-table :items="items" :fields="fields">
         <template v-slot:cell(index)="data">
           {{ data.index + 1 }}
         </template>
-
         <template v-slot:cell(actions)="data">
           <router-link tag="a" :to="getRoute(data)">
             Edit
           </router-link>
-
-          <router-link tag="span" :to="getRoute(data)" >
-            <a >Edit 2</a>
-          </router-link>
         </template>
-
       </b-table>
     </b-card>
   </ContentWrapper>
@@ -62,7 +55,7 @@
     },
     async mounted() {
       try{
-        this.items = await api.get();
+        this.items = await api.getList();
 
       } catch(err) {
         console.log(err)

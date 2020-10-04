@@ -12,10 +12,9 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("/studyplans")
-@CrossOrigin(maxAge = 3600)
 public class StudyPlanController {
 
-    private StudyPlanRepository repository;
+    private final StudyPlanRepository repository;
 
     public StudyPlanController(StudyPlanRepository repository) {
         this.repository = repository;

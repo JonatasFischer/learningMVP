@@ -10,6 +10,7 @@ const URL_PARAMS = new URLSearchParams(location.search);
 const  BASE_PATH = window.location.protocol + '//' + window.location.hostname+ ':8080';
 
 const STUDY_PLAN_URL = `${BASE_PATH}/api/studyplans/`;
+const SUBJECT_URL = `${BASE_PATH}/api/subjects/`;
 
 export default {
     async getList() {
@@ -24,6 +25,10 @@ export default {
 
     async save(studyPlan) {
         let result = await axios.put(STUDY_PLAN_URL + studyPlan.id, studyPlan);
+        return result.data;
+    },
+    async searchSubject(search) {
+        let result = await axios.get(`${SUBJECT_URL}?q=${search}`);
         return result.data;
     }
 };

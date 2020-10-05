@@ -13,20 +13,15 @@ public class StudyPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "studyplan_id")
-    private long id;
+    protected long id;
 
     @Column(name = "title", length = 50, nullable = false, unique = true)
-    String title;
+    protected String title;
+    @Lob
+    @Column(name = "description", length = 1024, nullable = false, unique = true)
+    protected String description;
 
-    @Column(name = "description", length = 50, nullable = false, unique = true)
-    String description;
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "studyplan_subject",
-            joinColumns = @JoinColumn(name = "studyplan_id"),
-            inverseJoinColumns = @JoinColumn(name = "subject_id"))
-
-    Set<Subject> subjects;
+    @OneToMany(mappedBy = "plan", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    protected Set<SubjectRequirement> subjects;
 
 }

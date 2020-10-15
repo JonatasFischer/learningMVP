@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Subject_requirement")
+@Table(name = "Subject_requirements")
 public class SubjectRequirement {
 
     @Id

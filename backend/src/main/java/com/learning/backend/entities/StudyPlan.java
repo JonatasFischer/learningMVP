@@ -3,16 +3,15 @@ package com.learning.backend.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "studyplan")
+@Table(name = "studyplans")
 public class StudyPlan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "studyplan_id")
+    @Column(name = "id")
     protected long id;
 
     @Column(name = "title", length = 50, nullable = false, unique = true)
@@ -22,6 +21,6 @@ public class StudyPlan {
     protected String description;
 
     @OneToMany(mappedBy = "plan", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OrderBy("sequence ASC")
     protected Set<SubjectRequirement> subjects;
-
 }

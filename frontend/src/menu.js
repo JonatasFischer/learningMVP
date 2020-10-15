@@ -1,3 +1,6 @@
+import StudyPlanMenus from '@/views/StudyPlan/menus'
+import SubjectsMenus from '@/views/Subject/menus'
+
 const Menu = [
     {
         heading: 'Main Navigation',
@@ -14,11 +17,7 @@ const Menu = [
         icon: 'icon-speedometer',
         translate: 'sidebar.nav.MENU',
         label: { value: 1, color: 'info' },
-        submenu: [{
-            name: 'StudyPlan',
-            translate: 'sidebar.nav.menu.STUDY_PLAN',
-            path: ['/study-plan','/study-plan/edit/:index']
-        }]
+        submenu: [...StudyPlanMenus, ...SubjectsMenus]
     }
 ];
 

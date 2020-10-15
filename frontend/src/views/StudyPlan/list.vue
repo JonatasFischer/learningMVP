@@ -11,6 +11,9 @@
         <template v-slot:cell(index)="data">
           {{ data.index + 1 }}
         </template>
+        <template v-slot:cell(description)="data">
+          <div v-html="data.item.description"></div>
+        </template>
         <template v-slot:cell(actions)="data">
           <router-link tag="a" :to="getRoute(data)">
             Edit

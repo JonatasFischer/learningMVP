@@ -26,6 +26,12 @@ public class Question {
 
     @Getter
     @Setter
+    protected String reference;
+
+    @Getter
+    @Setter
+    @Lob
+    @Column(name = "content", length = 1024, nullable = false, unique = true)
     protected String content;
 
     @Getter

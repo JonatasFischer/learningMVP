@@ -25,46 +25,13 @@
       <b-row>
         <b-col>
           <b-card title="Questions" class="card-default">
-            <b-form>
-              <b-form-row>
-                <b-form-group class="col-sm-6" id="input-group-subject" label="Subject:" label-for="subject"
-                              description="Subject">
-                  <v-select label="name" :filterable="false" :options="options" @search="onSearch"
-                            v-model="selectedSubject">
-                    <template slot="no-options">
-                      Digite para pesquisar
-                    </template>
-                    <template slot="option" slot-scope="option">
-                      <div class="d-center">
-                        {{ option.name }}
-                      </div>
-                    </template>
-                    <template slot="selected-option" slot-scope="option">
-                      <div class="selected d-center">
-                        {{ option.name }}
-                      </div>
-                    </template>
-                  </v-select>
-
-                </b-form-group>
-                <b-form-group class="col-xs-12 col-sm-3" id="input-group-subject2" label="Sort Order:"
-                              label-for="sortOrder" description="Subject sort order">
-                  <b-form-input id="sortOrder" type="text" required v-model="selectedSequence"
-                                placeholder="Please inform a sort order"></b-form-input>
-                </b-form-group>
-                <b-form-group class="col-xs-12 col-sm-3" id="input-group-subject3" label="Minimum Domain:"
-                              label-for="minimumDomain" description="Minimum subject Domain">
-                  <b-form-input id="minimumDomain" type="text" required v-model="selectedMinimumDomain"
-                                placeholder="Minimum subject domain"></b-form-input>
-                </b-form-group>
-
-              </b-form-row>
-            </b-form>
             <b-row>
               <b-col class="col-xs-12 col-sm-3 offset-9 my-2">
-                <b-button class="w-100" variant="outline-success" v-on:click="addQuestion">Add Subject</b-button>
+                <question :show="showOptionModal" :title="optionTitle" type="single-option" v-model="currentOption"></question>
+                <b-button class="w-100" variant="outline-success" v-on:click="addQuestion">Add Question</b-button>
               </b-col>
             </b-row>
+
 
             <b-row>
               <b-col class="col-xs-12">
@@ -86,7 +53,7 @@
       <b-row>
         <b-col>
           <b-button-group>
-            <b-button variant="success" v-on:click="savePlan">Save Subject</b-button>
+            <b-button variant="success" v-on:click="saveSubject">Save Subject</b-button>
             <b-button variant="danger" to="/subject">Cancel</b-button>
           </b-button-group>
         </b-col>
@@ -101,6 +68,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import "vue-select/dist/vue-select.css";
+import question from "./questions/question"
 import _ from 'lodash'
 import {quillEditor} from 'vue-quill-editor'
 import vSelect from "vue-select";
@@ -109,7 +77,8 @@ import vSelect from "vue-select";
 export default {
   components: {
     quillEditor,
-    vSelect
+    vSelect,
+    question
   },
   data() {
     return {
@@ -156,11 +125,14 @@ export default {
           ]
         }
       },
+      showOptionModal : false,
+      optionTitle : null,
+      currentOption: {}
     }
   },
   watch: {},
   methods: {
-    savePlan() {
+    saveSubject() {
       this.subject.content = this.content;
       this.subject.questions = this.questions;
       api.save(this.subject).then(this.onSaveSuccess, this.onSaveError)
@@ -170,6 +142,15 @@ export default {
       this.$router.push("/subject");
     },
     addQuestion() {
+
+      this.optionTitle = "New Option";
+      this.currentOption = {
+        type : "single-option",
+        reference : "",
+        options : [],
+        data : ""
+      };
+      this.showOptionModal = true;
       let question = {
         subject: this.selectedSubject,
         sequence: this.selectedSequence,

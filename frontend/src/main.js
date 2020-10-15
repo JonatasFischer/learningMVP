@@ -19,6 +19,12 @@ import App from './App.vue'
 import router from './router'
 import i18next from './i18n.js';
 import store from './store'
+import 'katex/dist/katex.min.css';
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+import "vue-select/dist/vue-select.css";
+
 
 Vue.config.productionTip = false
 

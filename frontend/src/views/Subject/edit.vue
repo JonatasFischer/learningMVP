@@ -27,7 +27,7 @@
           <b-card title="Questions" class="card-default">
             <b-row>
               <b-col class="col-xs-12 col-sm-3 offset-9 my-2">
-                <question :show="showOptionModal" :title="optionTitle" type="single-option" v-model="currentOption"></question>
+                <question :show="showQuestionModal" :title="questionTitle" type="single-option" v-model="currentQuestion" v-on:save="saveQuestion"></question>
                 <b-button class="w-100" variant="outline-success" v-on:click="addQuestion">Add Question</b-button>
               </b-col>
             </b-row>
@@ -125,9 +125,9 @@ export default {
           ]
         }
       },
-      showOptionModal : false,
-      optionTitle : null,
-      currentOption: {}
+      showQuestionModal : false,
+      questionTitle : null,
+      currentQuestion: {}
     }
   },
   watch: {},
@@ -141,23 +141,32 @@ export default {
     onSaveSuccess() {
       this.$router.push("/subject");
     },
-    addQuestion() {
 
-      this.optionTitle = "New Option";
-      this.currentOption = {
+    saveQuestion() {
+      if (!this.currentQuestion.id) {
+        let m = this.subject.question.reduce((min, el) => el.id < min ? el.id : min, -1);
+        m--;
+        this.currentQuestion.id = m;
+        this.subject.questions.push(this.currentQuestion);
+        this.currentQuestion = null;
+        this.showQuestionModal = false;
+      } else {
+        let index = this.value.options.findIndex((el) => el.id === this.currentOption.id);
+        if (index !== -1) {
+          this.value.options[index] = this.currentOption;
+        }
+      }
+    },
+
+    addQuestion() {
+      this.questonTitle = "New Option";
+      this.currentQuestion = {
         type : "single-option",
         reference : "",
         options : [],
         data : ""
       };
-      this.showOptionModal = true;
-      let question = {
-        subject: this.selectedSubject,
-        sequence: this.selectedSequence,
-        minimumDomain: this.selectedMinimumDomain
-      }
-      this.subject.questions.push(question);
-
+      this.showQuestionModal = true;
     },
 
     onSaveError() {

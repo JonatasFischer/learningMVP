@@ -100,10 +100,6 @@
 </template>
 <script>
 import api from './api'
-import 'quill/dist/quill.core.css'
-import 'quill/dist/quill.snow.css'
-import 'quill/dist/quill.bubble.css'
-import "vue-select/dist/vue-select.css";
 import _ from 'lodash'
 import {quillEditor} from 'vue-quill-editor'
 import vSelect from "vue-select";
@@ -154,7 +150,7 @@ export default {
             ['blockquote', 'code-block'],
             [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
             [{'direction': 'rtl'}, {'align': []}],
-            ['link', 'image', 'video'],
+            ['link', 'image', 'video', 'formula'],
             ['clean']
           ]
         }

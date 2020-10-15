@@ -28,7 +28,9 @@ module.exports = {
                 $: 'jquery',
                 jquery: 'jquery',
                 'window.jQuery': 'jquery',
-                jQuery: 'jquery'
+                jQuery: 'jquery',
+                'window.Quill': ['quill'],
+                'window.katex': ['katex'],
             })
         ]
     },

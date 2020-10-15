@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <b-row>
       <b-col>
         <b-form>
@@ -17,17 +16,52 @@
     </b-row>
     <b-row>
       <b-col>
-        <b-card title="Questions" class="card-default">
+        <b-card class="card-default" v-if="currentOption !== null">
+          <b-form>
+            <b-form-row>
+              <b-form-checkbox
+                  id="checkbox-1"
+                  v-model="currentOption.expectedValue"
+                  name="expectedValue"
+                  value="checked"
+                  unchecked-value="unchecked"
+              >
+                Expected Status
+              </b-form-checkbox>
+            </b-form-row>
+
+            <b-form-row>
+
+              <b-form-group id="option-data-group" label="Option content:" label-for="option-data"
+                            description="Option content">
+                <quill-editor id="option-data-editor" v-model="currentOption.data"
+                              :options="quillEditorOptions"/>
+              </b-form-group>
+            </b-form-row>
+          </b-form>
+          <b-row>
+            <b-col>
+              <b-button-group class="pull-left">
+                <b-button variant="success" v-on:click="saveOption">Save Option</b-button>
+                <b-button variant="danger" v-on:click="currentOption = null">Cancel</b-button>
+              </b-button-group>
+            </b-col>
+          </b-row>
+        </b-card>
+
+        <b-card title="Options" class="card-default" v-if="currentOption === null">
           <b-row>
             <b-col class="col-xs-12 col-sm-3 offset-9 my-2">
-              <b-button class="w-100" variant="outline-success" v-on:click="addOption">Add Question</b-button>
+              <b-button class="w-100" variant="outline-success" v-on:click="addOption">Add Option</b-button>
             </b-col>
           </b-row>
           <b-row>
             <b-col class="col-xs-12">
+
+
               <b-table :items="value.options" :fields="fields" head-variant="light" :bordered="true">
                 <template v-slot:cell(data)="data">
-                    <div v-html="data.item.data"></div>
+                  <div v-html="data.item.data"></div>
                 </template>
                 <template v-slot:cell(actions)="data">
                   <b-button v-on:click="remove(data.item)">
@@ -50,15 +84,10 @@
     </b-row>
     <div>{{ value }}</div>
   </div>
-
-
-
 </template>
 
 <script>
 import {quillEditor} from 'vue-quill-editor'
-import vSelect from "vue-select";
-import question from "@/views/Subject/questions/question";
 export default {
   name: "SingleOptionQuestion",
   props: {
@@ -69,6 +98,7 @@ export default {
   },
   data() {
     return {
+      currentOption: null,
       quillEditorOptions: {
         modules: {
           toolbar: [
@@ -79,7 +109,7 @@ export default {
             ['blockquote', 'code-block'],
             [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
             [{'direction': 'rtl'}, {'align': []}],
-            ['link', 'image', 'video'],
+            ['link', 'image', 'video', 'formula'],
             ['clean']
           ]
         }
@@ -105,9 +135,29 @@ export default {
       ]
     }
   },
-  methods : {
+  methods: {
     saveQuestion() {
+      this.$emit('input', this.value);
+      this.$emit('save', this.value);
+    },
 
+    addOption() {
+      this.currentOption = {data: null, expected_value: null, id: false}
+    },
+
+    saveOption() {
+      if (!this.currentOption.id) {
+        let min = this.value.options.reduce((accumulator, currentValue) => currentValue.id < accumulator ? currentValue.id : acumulator, -1);
+        min--;
+        this.currentOption.id = min;
+        this.value.options.push(this.currentOption);
+        this.currentOption = null;
+      } else {
+        let index = this.value.options.findIndex((el) => el.id === this.currentOption.id);
+        if (index !== -1) {
+          this.value.options[index] = this.currentOption;
+        }
+      }
     }
 
   }

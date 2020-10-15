@@ -52,6 +52,7 @@
     "jquery.flot.tooltip": "github:krzysu/flot.tooltip",
     "js-storage": "1.1.0",
     "jszip": "3.5.0",
+    "katex": "^0.12.0",
     "loaders.css": "0.1.2",
     "matchmedia": "0.1.2",
     "modernizr": "3.11.3",

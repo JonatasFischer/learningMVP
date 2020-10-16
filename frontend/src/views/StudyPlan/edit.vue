@@ -71,7 +71,7 @@
 
             <b-row>
               <b-col class="col-xs-12">
-                <b-table :items="subjects" :fields="fields" head-variant="light" :bordered="true">
+                <b-table :items="subjects" :fields="subjectFields" head-variant="light" :bordered="true">
                   <template v-slot:cell(name)="data">
                     {{ data.item.subject ? data.item.subject.name : '-' }}
                   </template>
@@ -116,7 +116,7 @@ export default {
       selectedSequence: 0,
       selectedMinimumDomain: 100,
       studyPlan: {subjects: []},
-      fields: [
+      subjectFields: [
         {
           key: 'name',
           sortable: true,

@@ -59,7 +59,7 @@
             <b-col class="col-xs-12">
 
 
-              <b-table :items="value.options" :fields="fields" head-variant="light" :bordered="true">
+              <b-table :items="value.options" :fields="optionsFields" head-variant="light" :bordered="true">
                 <template v-slot:cell(data)="data">
                   <div v-html="data.item.data"></div>
                 </template>
@@ -78,7 +78,7 @@
       <b-col>
         <b-button-group>
           <b-button variant="success" v-on:click="saveQuestion">Save Question</b-button>
-          <b-button variant="danger" to="/subject">Cancel</b-button>
+          <b-button variant="danger" v-on:click="cancelQuestion">Cancel</b-button>
         </b-button-group>
       </b-col>
     </b-row>
@@ -114,7 +114,7 @@ export default {
           ]
         }
       },
-      fields: [
+      optionsFields: [
 
         {
           key: 'data',
@@ -139,6 +139,9 @@ export default {
     saveQuestion() {
       this.$emit('input', this.value);
       this.$emit('save', this.value);
+    },
+    cancelQuestion() {
+      this.$emit('cancel', this.value);
     },
 
     addOption() {

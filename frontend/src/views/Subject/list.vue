@@ -7,7 +7,7 @@
       </div>
     </div>
     <b-card title="Table Card" class="card-default">
-      <b-table :items="items" :fields="fields">
+      <b-table :items="items" :fields="subjectListFields">
         <template v-slot:cell(index)="data">
           {{ data.index + 1 }}
         </template>
@@ -25,7 +25,7 @@ import api from './api'
 export default {
   data () {
     return {
-      fields: [
+      subjectListFields: [
         'index',
         {
           key: 'id',

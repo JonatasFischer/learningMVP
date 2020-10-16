@@ -1,7 +1,5 @@
 <template>
-  <b-modal size="xl"  id="option-modal" :title="title" v-model="showModal">
-    <single-option v-if="value.type === 'single-option'" v-model="value" v-on:save="saveQuestion"/>
-  </b-modal>
+    <single-option v-if="value.type === 'single-option'" v-model="value" v-on:save="saveQuestion" v-on:cancel="cancelQuestion"/>
 </template>
 
 <script>
@@ -18,14 +16,17 @@ export default {
   name: "Question",
   props: {
     value : Object,
-    show: Boolean,
-    title: String,
+    title: String
   },
   methods : {
     saveQuestion(e) {
-      debugger;
       this.$emit('input', e);
       this.$emit('save', e);
+
+    },
+
+    cancelQuestion(e) {
+      this.$emit('cancel', e);
 
     }
 

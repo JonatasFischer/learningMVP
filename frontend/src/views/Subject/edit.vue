@@ -27,7 +27,10 @@
           <b-card title="Questions" class="card-default">
             <b-row>
               <b-col class="col-xs-12 col-sm-3 offset-9 my-2">
-                <question :show="showQuestionModal" :title="questionTitle" type="single-option" v-model="currentQuestion" v-on:save="saveQuestion"></question>
+                <b-modal size="xl" id="option-modal" :title="title" v-model="showQuestionModal" hide-footer="true">
+                  <question :title="questionTitle" type="single-option" v-model="currentQuestion"
+                            v-on:save="saveQuestion" v-on:cancel="cancelQuestion"/>
+                </b-modal>
                 <b-button class="w-100" variant="outline-success" v-on:click="addQuestion">Add Question</b-button>
               </b-col>
             </b-row>
@@ -35,7 +38,7 @@
 
             <b-row>
               <b-col class="col-xs-12">
-                <b-table :items="questions" :fields="fields" head-variant="light" :bordered="true">
+                <b-table :items="questions" :fields="questionsFields" head-variant="light" :bordered="true">
                   <template v-slot:cell(name)="data">
                     {{ data.item.subject ? data.item.subject.name : '-' }}
                   </template>
@@ -86,7 +89,7 @@ export default {
       selectedSequence: 0,
       selectedMinimumDomain: 100,
       subject: {questions: []},
-      fields: [
+      questionsFields: [
         {
           key: 'name',
           sortable: true,
@@ -125,8 +128,8 @@ export default {
           ]
         }
       },
-      showQuestionModal : false,
-      questionTitle : null,
+      showQuestionModal: false,
+      questionTitle: null,
       currentQuestion: {}
     }
   },
@@ -140,31 +143,37 @@ export default {
 
     onSaveSuccess() {
       this.$router.push("/subject");
+      this.currentQuestion = null;
+    },
+
+    cancelQuestion() {
+      this.showQuestionModal = false;
     },
 
     saveQuestion() {
       if (!this.currentQuestion.id) {
-        let m = this.subject.question.reduce((min, el) => el.id < min ? el.id : min, -1);
+        debugger;
+        let m = this.subject.questions.reduce((min, el) => el.id < min ? el.id : min, -1);
         m--;
         this.currentQuestion.id = m;
         this.subject.questions.push(this.currentQuestion);
         this.currentQuestion = null;
-        this.showQuestionModal = false;
       } else {
-        let index = this.value.options.findIndex((el) => el.id === this.currentOption.id);
+        let index = this.subject.questions.findIndex((el) => el.id === this.currentOption.id);
         if (index !== -1) {
-          this.value.options[index] = this.currentOption;
+          this.subject.questions[index] = this.currentOption;
         }
       }
+      this.showQuestionModal = false;
     },
 
     addQuestion() {
       this.questonTitle = "New Option";
       this.currentQuestion = {
-        type : "single-option",
-        reference : "",
-        options : [],
-        data : ""
+        type: "single-option",
+        reference: "",
+        options: [],
+        data: ""
       };
       this.showQuestionModal = true;
     },
@@ -206,7 +215,7 @@ export default {
     },
     content: {
       get() {
-        return this.subject.content || {data:null};
+        return this.subject.content || {data: null};
       }
     }
   },

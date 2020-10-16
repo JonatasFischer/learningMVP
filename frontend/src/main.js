@@ -25,6 +25,26 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import "vue-select/dist/vue-select.css";
 import VeeValidate from 'vee-validate';
+const config = {
+    aria: true,
+    classNames: {},
+    classes: false,
+    delay: 0,
+    dictionary: null,
+    errorBagName: 'errors', // change if property conflicts
+    events: 'input|blur',
+    fieldsBagName: 'validationFields',
+    i18n: null, // the vue-i18n plugin instance
+    i18nRootKey: 'validations', // the nested key under which the validation messages will be located
+    inject: true,
+    locale: 'en',
+    validity: false,
+    useConstraintAttrs: true
+};
+
+
+
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
@@ -39,7 +59,7 @@ import httpInterceptor from './mixins/httpinterceptor'
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, config);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(BootstrapVue);
 Vue.use(VueI18Next);

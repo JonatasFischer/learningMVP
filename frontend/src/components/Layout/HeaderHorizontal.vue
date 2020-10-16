@@ -6,10 +6,10 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#/">
                     <div class="brand-logo">
-                        <img class="img-fluid" src="img/logo.png" alt="App Logo">
+                        <img src="img/logo.svg" alt="App Logo">
                     </div>
                     <div class="brand-logo-collapsed">
-                        <img class="img-fluid" src="img/logo-single.png" alt="App Logo">
+                        <img src="img/logo-single.svg" alt="App Logo">
                     </div>
                 </a>
                 <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>

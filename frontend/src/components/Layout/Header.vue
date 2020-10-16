@@ -6,10 +6,10 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#/">
                     <div class="brand-logo">
-                        <img class="img-fluid" src="img/logo.png" alt="App Logo">
+                        <img  src="img/logo.svg" alt="App Logo">
                     </div>
                     <div class="brand-logo-collapsed">
-                        <img class="img-fluid" src="img/logo-single.png" alt="App Logo">
+                        <img  src="img/logo-single.svg" alt="App Logo">
                     </div>
                 </a>
             </div>
@@ -106,78 +106,78 @@
                                     <span class="text-sm">More notifications</span>
                                     <span class="badge badge-danger ml-auto">14</span>
                                 </span>
-                            </div>
-                        </div>
-                        <!-- END list group-->
-                    </b-dropdown-item>
-                </b-nav-item-dropdown>
-                <!-- END Alert menu-->
-                <!-- START Offsidebar button-->
-                <li class="nav-item">
-                    <a href="" class="nav-link" @click.prevent.prevent="toggleOffsidebar">
-                        <em class="icon-notebook"></em>
-                    </a>
-                </li>
-                <!-- END Offsidebar.prevent menu-->
-            </ul>
-            <!-- END Right Navbar-->
-            <HeaderSearch :isOpen="navSearchOpen" :onClose.prevent="closeNavSearch"/>
-        </nav>
-        <!-- END Top Navbar-->
-    </header>
+              </div>
+            </div>
+            <!-- END list group-->
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+        <!-- END Alert menu-->
+        <!-- START Offsidebar button-->
+        <li class="nav-item">
+          <a href="" class="nav-link" @click.prevent.prevent="toggleOffsidebar">
+            <em class="icon-notebook"></em>
+          </a>
+        </li>
+        <!-- END Offsidebar.prevent menu-->
+      </ul>
+      <!-- END Right Navbar-->
+      <HeaderSearch :isOpen="navSearchOpen" :onClose.prevent="closeNavSearch"/>
+    </nav>
+    <!-- END Top Navbar-->
+  </header>
 </template>
 
 <script>
-    import { mapMutations } from 'vuex'
-    import HeaderSearch from '@/components/Layout/HeaderSearch'
-    import ToggleFullscreen from '@/components/Common/ToggleFullscreen'
+import {mapMutations} from 'vuex'
+import HeaderSearch from '@/components/Layout/HeaderSearch'
+import ToggleFullscreen from '@/components/Common/ToggleFullscreen'
 
-    export default {
-        name: 'Header',
-        data: () => {
-            return {
-                navSearchOpen: false
-            }
-        },
-        components: {
-            HeaderSearch,
-            ToggleFullscreen
-        },
-        methods: {
-            /**
-             * Triggers a window resize event when clicked
-             * for plugins that needs to be redrawed
-             */
-            resize: e => {
-                // all IE friendly dispatchEvent
-                var evt = document.createEvent('UIEvents');
-                evt.initUIEvent('resize', true, false, window, 0);
-                window.dispatchEvent(evt);
-                // modern dispatchEvent way
-                // window.dispatchEvent(new Event('resize'));
-            },
-            ...mapMutations([
-                'toggleSetting'
-            ]),
-            toggleOffsidebar() {
-                this.toggleSetting('offsidebarOpen')
-            },
-            toggleOffcanvas() {
-                this.toggleSetting('asideToggled')
-            },
-            toggleAsideCollapsed() {
-                this.toggleSetting('isCollapsed')
-                this.resize();
-            },
-            toggleUserBlock() {
-                this.toggleSetting('showUserBlock')
-            },
-            toggleNavSearch () {
-                this.navSearchOpen = !this.navSearchOpen;
-            },
-            closeNavSearch() {
-                this.navSearchOpen = false;
-            }
-        }
+export default {
+  name: 'Header',
+  data: () => {
+    return {
+      navSearchOpen: false
     }
+  },
+  components: {
+    HeaderSearch,
+    ToggleFullscreen
+  },
+  methods: {
+    /**
+     * Triggers a window resize event when clicked
+     * for plugins that needs to be redrawed
+     */
+    resize: e => {
+      // all IE friendly dispatchEvent
+      var evt = document.createEvent('UIEvents');
+      evt.initUIEvent('resize', true, false, window, 0);
+      window.dispatchEvent(evt);
+      // modern dispatchEvent way
+      // window.dispatchEvent(new Event('resize'));
+    },
+    ...mapMutations([
+      'toggleSetting'
+    ]),
+    toggleOffsidebar() {
+      this.toggleSetting('offsidebarOpen')
+    },
+    toggleOffcanvas() {
+      this.toggleSetting('asideToggled')
+    },
+    toggleAsideCollapsed() {
+      this.toggleSetting('isCollapsed')
+      this.resize();
+    },
+    toggleUserBlock() {
+      this.toggleSetting('showUserBlock')
+    },
+    toggleNavSearch() {
+      this.navSearchOpen = !this.navSearchOpen;
+    },
+    closeNavSearch() {
+      this.navSearchOpen = false;
+    }
+  }
+}
 </script>

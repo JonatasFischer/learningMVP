@@ -5,6 +5,7 @@ import com.learning.backend.entities.SubjectRequirement;
 import com.learning.backend.repositories.StudyPlanRepository;
 import com.learning.backend.repositories.SubjectRequirementRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,17 +28,19 @@ public class StudyPlanController {
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     public List<StudyPlan> list() {
         List<StudyPlan> result = repository.findAll();
 
         return result;
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public StudyPlan get(@PathVariable(value = "id") Long id) {
         return repository.getOne(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     @Transactional
     public ResponseEntity<Object> createResource(@RequestBody StudyPlan plan) {
@@ -77,7 +80,7 @@ public class StudyPlanController {
             requirementRepository.save(s);
         });
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<Object> updateResource(@PathVariable(value = "id") Long id, @RequestBody StudyPlan remotePlan) {

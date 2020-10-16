@@ -3,6 +3,7 @@ package com.learning.backend.controllers;
 import com.learning.backend.entities.Subject;
 import com.learning.backend.repositories.SubjectRepository;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -20,6 +21,7 @@ public class SubjectController {
         this.repository = repository;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public List<Subject> list(@RequestParam(required = false, name = "q") String query) {
         if (StringUtils.isEmpty(query))
@@ -27,11 +29,13 @@ public class SubjectController {
         return repository.search(query);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{id}")
     public Subject get(@PathVariable(value = "id") Long id) {
         return repository.getOne(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<Object> createResource(@RequestBody Subject plan) {
         Subject savedPlan = repository.save(plan);
@@ -39,7 +43,8 @@ public class SubjectController {
                 .buildAndExpand(savedPlan.getId()).toUri();
         return ResponseEntity.created(location).build();
     }
-
+    
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateResource(@PathVariable(value = "id") Long id, @RequestBody Subject plan) {
         plan.setId(id);

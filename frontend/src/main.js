@@ -24,10 +24,23 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import "vue-select/dist/vue-select.css";
+import VeeValidate from 'vee-validate';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {
+    faHome,
+    faUser,
+    faUserPlus,
+    faSignInAlt,
+    faSignOutAlt
+} from '@fortawesome/free-solid-svg-icons';
+import httpInterceptor from './mixins/httpinterceptor'
 
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 Vue.config.productionTip = false
-
+Vue.use(VeeValidate);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(BootstrapVue);
 Vue.use(VueI18Next);
 
@@ -37,5 +50,6 @@ new Vue({
     i18n,
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    mixins: [httpInterceptor]
 }).$mount('#app')

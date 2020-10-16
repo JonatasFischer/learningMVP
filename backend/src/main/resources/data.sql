@@ -9,3 +9,7 @@ insert into subjects (`name`, `parent_subject_id`) values ('Subject 3',null);
 insert into subjects (`name`, `parent_subject_id`) values ('Subject 4',null);
 insert into subjects (`name`, `parent_subject_id`) values ('Subject 5',null);
 insert into subjects (`name`, `parent_subject_id`) values ('Subject 6',null);
+
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
